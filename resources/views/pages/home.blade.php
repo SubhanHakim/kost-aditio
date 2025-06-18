@@ -5,8 +5,8 @@
 @endsection
 
 @section('hero-image')
-    <div class="-mx-[100px] ">
-        <img src="{{ asset('images/hero-section.png') }}" alt="Hero Image" class="w-full h-[400px] object-cover">
+    <div class="-mx-[100px] overflow-hidden flex justify-center items-center h-[400px]">
+        <img src="{{ asset('images/kost2.jpeg') }}" alt="Hero Image" class="w-full min-w-full object-cover">
     </div>
 @endsection
 

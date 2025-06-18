@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagihanController;
+use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\UserDashboard;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,11 @@ Route::get('/dashboard/testimoni', function () {
 Route::middleware(['auth', 'verified', 'role:user', 'must.be.paid'])->group(function () {
     Route::get('/dashboard/keluhan', [KeluhanController::class, 'index'])->name('dashboard.keluhan');
     Route::post('/dashboard/keluhan', [KeluhanController::class, 'store'])->name('dashboard.keluhan.store');
+});
+
+Route::middleware(['auth', 'verified', 'role:user', 'must.be.paid'])->group(function () {
+    Route::get('/dashboard/testimoni', [TestimonialController::class, 'index'])->name('dashboard.testimoni');
+    Route::post('/dashboard/testimoni', [TestimonialController::class, 'store'])->name('dashboard.testimoni.store');
 });
 
 

@@ -20,72 +20,98 @@
         </nav>
     </x-slot>
 
-    <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
-        <h2 class="text-xl font-semibold mb-6 text-[#1e1e1e] dark:text-[#1e1e1e]">Keluhan</h2>
+    <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
+        <div class="bg-amber-600 px-6 py-4">
+            <h4 class="text-white text-lg font-bold">Keluhan Anda</h4>
+        </div>
 
-        @if (session('success'))
-            <div class="mb-4 p-2 bg-green-100 text-green-700 rounded">{{ session('success') }}</div>
-        @endif
+        <div class="p-6">
+            @if (session('success'))
+                <div class="mb-6 p-3 bg-green-100 text-green-800 font-medium rounded-lg border border-green-200">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-        <form class="space-y-4 max-w-xl" method="POST" action="{{ route('dashboard.keluhan.store') }}">
-            @csrf
-            <div>
-                <label class="block text-sm font-medium mb-1">Judul Keluhan</label>
-                <input type="text" name="judul" class="w-full rounded-md border-gray-300" required>
+            <!-- Form Keluhan -->
+            <div class="mb-8">
+                <h3 class="text-lg font-bold text-black mb-4">Sampaikan Keluhan</h3>
+                
+                <form method="POST" action="{{ route('dashboard.keluhan.store') }}" class="space-y-5 max-w-xl">
+                    @csrf
+                    <div>
+                        <label class="block text-base font-medium text-black dark:text-white mb-2">Judul Keluhan</label>
+                        <input type="text" name="judul" class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-base" 
+                            placeholder="Contoh: Keran air bocor" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-base font-medium text-black dark:text-white mb-2">Isi Keluhan</label>
+                        <textarea name="isi" rows="4" class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-base" 
+                            placeholder="Jelaskan detail masalah Anda di sini..." required></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-base font-medium text-black dark:text-white mb-2">No Kamar</label>
+                        <select name="kamar_id" class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-base" required>
+                            <option value="">Pilih Kamar</option>
+                            @foreach ($kamars as $kamar)
+                                <option value="{{ $kamar->id }}">{{ $kamar->no_kamar }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="px-6 py-3 bg-amber-600 text-white font-bold rounded-md hover:bg-amber-700">
+                        Kirim Keluhan
+                    </button>
+                </form>
             </div>
-            <div>
-                <label class="block text-sm font-medium mb-1">Isi Keluhan</label>
-                <textarea name="isi" rows="4" class="w-full rounded-md border-gray-300" required></textarea>
-            </div>
-            <div>
-                <label class="block text-sm font-medium mb-1">No Kamar</label>
-                <select name="kamar_id" class="w-full rounded-md border-gray-300" required>
-                    <option value="">Pilih Kamar</option>
-                    @foreach ($kamars as $kamar)
-                        <option value="{{ $kamar->id }}">{{ $kamar->no_kamar }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <button type="submit"
-                class="px-5 py-2 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700">Kirim
-                Keluhan</button>
-        </form>
 
-        <hr class="my-6">
-
-        <h3 class="text-lg font-semibold mb-4">Daftar Keluhan Anda</h3>
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead>
-                <tr>
-                    <th class="px-4 py-2 text-left">Judul</th>
-                    <th class="px-4 py-2 text-left">Isi</th>
-                    <th class="px-4 py-2 text-left">Status</th>
-                    <th class="px-4 py-2 text-left">Tanggal</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($keluhans as $keluhan)
-                    <tr>
-                        <td class="px-4 py-2">{{ $keluhan->judul_keluhan }}</td>
-                        <td class="px-4 py-2">{{ $keluhan->deskripsi_keluhan }}</td>
-                        <td class="px-4 py-2">
-                            @if ($keluhan->status === 'pending')
-                                <span class="px-2 py-1 rounded bg-yellow-100 text-yellow-700 text-xs">Belum
-                                    Diproses</span>
-                            @elseif($keluhan->status === 'proses')
-                                <span class="px-2 py-1 rounded bg-blue-100 text-blue-700 text-xs">Diproses</span>
-                            @else
-                                <span class="px-2 py-1 rounded bg-green-100 text-green-700 text-xs">Selesai</span>
-                            @endif
-                        </td>
-                        <td class="px-4 py-2">{{ $keluhan->created_at->format('d-m-Y H:i') }}</td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="4" class="px-4 py-2 text-center text-gray-400">Belum ada keluhan.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+            <div class="border-t border-gray-300 dark:border-gray-600 pt-6">
+                <h3 class="text-lg font-bold text-black dark:text-white mb-4">Riwayat Keluhan</h3>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b-2 border-gray-300 dark:border-gray-600">
+                                <th class="py-3 px-4 text-left text-base font-bold text-black">Judul</th>
+                                <th class="py-3 px-4 text-left text-base font-bold text-black">Keluhan</th>
+                                <th class="py-3 px-4 text-left text-base font-bold text-black">Status</th>
+                                <th class="py-3 px-4 text-left text-base font-bold text-black">Tanggal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($keluhans as $keluhan)
+                                <tr class="border-b border-gray-300 dark:border-gray-600">
+                                    <td class="py-4 px-4 text-base font-medium text-black">
+                                        {{ $keluhan->judul_keluhan }}
+                                    </td>
+                                    <td class="py-4 px-4 text-base text-black">
+                                        {{ $keluhan->deskripsi_keluhan }}
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        @if ($keluhan->status === 'pending')
+                                            <span class="py-1 px-3 bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100 font-bold rounded">Menunggu</span>
+                                        @elseif($keluhan->status === 'proses')
+                                            <span class="py-1 px-3 bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100 font-bold rounded">Diproses</span>
+                                        @else
+                                            <span class="py-1 px-3 bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100 font-bold rounded">Selesai</span>
+                                        @endif
+                                    </td>
+                                    <td class="py-4 px-4 text-base text-black">
+                                        {{ $keluhan->created_at->format('d-m-Y') }}
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="py-6 px-4 text-center text-base text-gray-500 dark:text-gray-400 italic">
+                                        Belum ada keluhan yang diajukan.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </x-app-layout>

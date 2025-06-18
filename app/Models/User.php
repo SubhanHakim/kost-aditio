@@ -37,6 +37,21 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\Keluhan::class);
     }
 
+    public function testimonials()
+    {
+        return $this->hasMany(Testimonial::class);
+    }
+
+    public function approvedTestimonials()
+    {
+        return $this->hasMany(Testimonial::class)->where('status', 'approved');
+    }
+
+    public function booking()
+    {
+        return $this->hasOne(Booking::class)->latest();
+    }
+
 
 
     /**
