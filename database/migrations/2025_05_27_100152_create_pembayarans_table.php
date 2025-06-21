@@ -16,9 +16,12 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade');
             $table->decimal('jumlah', 10, 2);
+            $table->string('status')->default('pending');
             $table->string('midtrans_snap_token')->nullable();
             $table->string('midtrans_order_id')->nullable();
             $table->string('midtrans_transaction_status')->nullable();
+            $table->timestamp('tanggal_verifikasi')->nullable();
+            $table->text('catatan_admin')->nullable();
             $table->timestamps();
         });
     }

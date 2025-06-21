@@ -74,6 +74,10 @@
                                 class="w-20 h-20 rounded-full flex items-center justify-center mb-4 border-4 border-[#DC8330] bg-amber-500 text-white font-bold text-xl">
                                 <span x-text="item.name.substring(0, 2).toUpperCase()"></span>
                             </div>
+
+                            <!-- Tambahkan bagian pesan testimoni yang hilang di sini -->
+                            <div class="mb-4 text-gray-700 italic flex-grow" x-text="item.text"></div>
+
                             <div class="mt-auto">
                                 <div class="flex items-center gap-2 mb-1 justify-center">
                                     <span class="font-semibold text-[#263238]" x-text="item.name"></span>

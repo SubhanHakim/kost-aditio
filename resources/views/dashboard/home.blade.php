@@ -1,19 +1,36 @@
 <x-app-layout>
     <x-slot name="header">
-        <nav class="w-full flex items-center justify-between" aria-label="Global">
-            <ul class="icon-nav flex items-center gap-4">
-                <li class="relative xl:hidden">
-                    <a class="text-xl icon-hover cursor-pointer text-heading" id="headerCollapse"
-                        data-hs-overlay="#application-sidebar-brand" aria-controls="application-sidebar-brand"
-                        aria-label="Toggle navigation" href="javascript:void(0)">
+        <nav class="w-full flex items-center justify-between py-2" aria-label="Global">
+            <!-- Left Side -->
+            <div class="flex items-center gap-4">
+                <!-- Mobile Toggle Menu -->
+                <div class="relative xl:hidden">
+                    <a class="text-xl icon-hover cursor-pointer text-heading p-2 rounded-md hover:bg-gray-100"
+                        id="headerCollapse" data-hs-overlay="#application-sidebar-brand"
+                        aria-controls="application-sidebar-brand" aria-label="Toggle navigation"
+                        href="javascript:void(0)">
                         <i class="ti ti-menu-2 relative z-1"></i>
                     </a>
-                </li>
-                <li class="relative">
-                    @include('header-components.dd-notification')
-                </li>
-            </ul>
+                </div>
+
+                <!-- Page Title and Breadcrumb -->
+                <div>
+                    <h1 class="text-xl font-bold text-gray-800">{{ $title ?? 'Dashboard' }}</h1>
+                    <div class="text-sm text-gray-500 flex items-center">
+                        <a href="/dashboard" class="hover:text-amber-600">Home</a>
+                        @if (isset($breadcrumbs))
+                            @foreach ($breadcrumbs as $label => $url)
+                                <span class="mx-2">/</span>
+                                <a href="{{ $url }}" class="hover:text-amber-600">{{ $label }}</a>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side -->
             <div class="flex items-center gap-4">
+                <!-- Profile Dropdown -->
                 @include('header-components.dd-profile')
             </div>
         </nav>

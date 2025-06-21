@@ -10,9 +10,12 @@ class Pembayaran extends Model
         'user_id',
         'booking_id',
         'jumlah',
+        'status',
         'midtrans_snap_token',
         'midtrans_order_id',
         'midtrans_transaction_status',
+        'tanggal_verifikasi',
+        'catatan_admin',
     ];
 
     public function user()

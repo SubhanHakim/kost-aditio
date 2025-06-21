@@ -1,20 +1,33 @@
 {{-- filepath: resources/views/dashboard/keluhan.blade.php --}}
 <x-app-layout>
     <x-slot name="header">
-        <nav class="w-full flex items-center justify-between" aria-label="Global">
-            <ul class="icon-nav flex items-center gap-4">
-                <li class="relative xl:hidden">
-                    <a class="text-xl icon-hover cursor-pointer text-heading" id="headerCollapse"
-                        data-hs-overlay="#application-sidebar-brand" aria-controls="application-sidebar-brand"
-                        aria-label="Toggle navigation" href="javascript:void(0)">
+        <nav class="w-full flex items-center justify-between py-2" aria-label="Global">
+            <!-- Left Side -->
+            <div class="flex items-center gap-4">
+                <!-- Mobile Toggle Menu -->
+                <div class="relative xl:hidden">
+                    <a class="text-xl icon-hover cursor-pointer text-heading p-2 rounded-md hover:bg-gray-100"
+                        id="headerCollapse" data-hs-overlay="#application-sidebar-brand"
+                        aria-controls="application-sidebar-brand" aria-label="Toggle navigation"
+                        href="javascript:void(0)">
                         <i class="ti ti-menu-2 relative z-1"></i>
                     </a>
-                </li>
-                <li class="relative">
-                    @include('header-components.dd-notification')
-                </li>
-            </ul>
+                </div>
+
+                <!-- Page Title and Breadcrumb -->
+                <div>
+                    <h1 class="text-xl font-bold text-gray-800">{{ $title ?? 'Keluhan' }}</h1>
+                    <div class="text-sm text-gray-500 flex items-center">
+                        <a href="/dashboard" class="hover:text-amber-600">Home</a>
+                        <span class="mx-2">/</span>
+                        <a href="/dashboard/keluhan" class="hover:text-amber-600">Keluhan</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side -->
             <div class="flex items-center gap-4">
+                <!-- Profile Dropdown -->
                 @include('header-components.dd-profile')
             </div>
         </nav>
@@ -35,32 +48,37 @@
             <!-- Form Keluhan -->
             <div class="mb-8">
                 <h3 class="text-lg font-bold text-black mb-4">Sampaikan Keluhan</h3>
-                
+
                 <form method="POST" action="{{ route('dashboard.keluhan.store') }}" class="space-y-5 max-w-xl">
                     @csrf
                     <div>
                         <label class="block text-base font-medium text-black dark:text-white mb-2">Judul Keluhan</label>
-                        <input type="text" name="judul" class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-base" 
+                        <input type="text" name="judul"
+                            class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-base"
                             placeholder="Contoh: Keran air bocor" required>
                     </div>
-                    
+
                     <div>
                         <label class="block text-base font-medium text-black dark:text-white mb-2">Isi Keluhan</label>
-                        <textarea name="isi" rows="4" class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-base" 
+                        <textarea name="isi" rows="4"
+                            class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-base"
                             placeholder="Jelaskan detail masalah Anda di sini..." required></textarea>
                     </div>
-                    
+
                     <div>
                         <label class="block text-base font-medium text-black dark:text-white mb-2">No Kamar</label>
-                        <select name="kamar_id" class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-base" required>
+                        <select name="kamar_id"
+                            class="w-full p-3 rounded-md border border-gray-300 dark:border-gray-600 text-base"
+                            required>
                             <option value="">Pilih Kamar</option>
                             @foreach ($kamars as $kamar)
                                 <option value="{{ $kamar->id }}">{{ $kamar->no_kamar }}</option>
                             @endforeach
                         </select>
                     </div>
-                    
-                    <button type="submit" class="px-6 py-3 bg-amber-600 text-white font-bold rounded-md hover:bg-amber-700">
+
+                    <button type="submit"
+                        class="px-6 py-3 bg-amber-600 text-white font-bold rounded-md hover:bg-amber-700">
                         Kirim Keluhan
                     </button>
                 </form>
@@ -68,7 +86,7 @@
 
             <div class="border-t border-gray-300 dark:border-gray-600 pt-6">
                 <h3 class="text-lg font-bold text-black dark:text-white mb-4">Riwayat Keluhan</h3>
-                
+
                 <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead>
@@ -90,11 +108,14 @@
                                     </td>
                                     <td class="py-4 px-4">
                                         @if ($keluhan->status === 'pending')
-                                            <span class="py-1 px-3 bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100 font-bold rounded">Menunggu</span>
+                                            <span
+                                                class="py-1 px-3 bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100 font-bold rounded">Menunggu</span>
                                         @elseif($keluhan->status === 'proses')
-                                            <span class="py-1 px-3 bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100 font-bold rounded">Diproses</span>
+                                            <span
+                                                class="py-1 px-3 bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100 font-bold rounded">Diproses</span>
                                         @else
-                                            <span class="py-1 px-3 bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100 font-bold rounded">Selesai</span>
+                                            <span
+                                                class="py-1 px-3 bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100 font-bold rounded">Selesai</span>
                                         @endif
                                     </td>
                                     <td class="py-4 px-4 text-base text-black">
@@ -103,7 +124,8 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="py-6 px-4 text-center text-base text-gray-500 dark:text-gray-400 italic">
+                                    <td colspan="4"
+                                        class="py-6 px-4 text-center text-base text-gray-500 dark:text-gray-400 italic">
                                         Belum ada keluhan yang diajukan.
                                     </td>
                                 </tr>

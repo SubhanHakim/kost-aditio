@@ -1,19 +1,26 @@
 {{-- filepath: resources/views/dashboard/testimoni.blade.php --}}
 <x-app-layout>
     <x-slot name="header">
-        <nav class="w-full flex items-center justify-between" aria-label="Global">
-            <ul class="icon-nav flex items-center gap-4">
-                <li class="relative xl:hidden">
-                    <a class="text-xl icon-hover cursor-pointer text-heading" id="headerCollapse"
-                        data-hs-overlay="#application-sidebar-brand" aria-controls="application-sidebar-brand"
-                        aria-label="Toggle navigation" href="javascript:void(0)">
+        <nav class="w-full flex items-center justify-between py-2" aria-label="Global">
+            <div class="flex items-center gap-4">
+                <div class="relative xl:hidden">
+                    <a class="text-xl icon-hover cursor-pointer text-heading p-2 rounded-md hover:bg-gray-100"
+                        id="headerCollapse" data-hs-overlay="#application-sidebar-brand"
+                        aria-controls="application-sidebar-brand" aria-label="Toggle navigation"
+                        href="javascript:void(0)">
                         <i class="ti ti-menu-2 relative z-1"></i>
                     </a>
-                </li>
-                <li class="relative">
-                    @include('header-components.dd-notification')
-                </li>
-            </ul>
+                </div>
+
+                <div>
+                    <h1 class="text-xl font-bold text-gray-800">{{ $title ?? 'Testimoni' }}</h1>
+                    <div class="text-sm text-gray-500 flex items-center">
+                        <a href="/dashboard" class="hover:text-amber-600">Home</a>
+                        <span class="mx-2">/</span>
+                        <a href="/dashboard/testimoni" class="hover:text-amber-600">Testimoni</a>
+                    </div>
+                </div>
+            </div>
             <div class="flex items-center gap-4">
                 @include('header-components.dd-profile')
             </div>
@@ -142,10 +149,10 @@
             const stars = document.querySelectorAll('.star-label');
             const starIcons = document.querySelectorAll('.star-icon');
 
-            
+
             function updateStars(rating) {
                 starIcons.forEach((star, index) => {
-    
+
                     if (index + 1 <= rating) {
                         star.classList.add('text-amber-500');
                         star.classList.remove('text-gray-300');

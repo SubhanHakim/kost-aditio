@@ -2,7 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\FinancialOverview;
 use App\Filament\Widgets\ListStatusBayar;
+use App\Filament\Widgets\PendapatanChartWidget;
 use App\Filament\Widgets\StatistikDashboard;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -40,7 +42,9 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 StatistikDashboard::class,
-                ListStatusBayar::class
+                ListStatusBayar::class,
+                FinancialOverview::class,
+                PendapatanChartWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

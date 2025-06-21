@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    
+    .filament-main-content, .filament-main-content * {
+        visibility: visible;
+    }
+    
+    .filament-main-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+    
+    form, button, .filament-header, .filament-sidebar, .filament-footer, .no-print {
+        display: none !important;
+    }
+}
