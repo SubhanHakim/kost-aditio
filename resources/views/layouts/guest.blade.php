@@ -18,7 +18,7 @@
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
             <div>
                 <a href="/">
-                    <h1 class="text-white text-center text-2xl uppercase font-semibold">Selamat Datang <br/> Di Aditio Kost</h1>
+                    <h1 class="text-gray-900 text-center text-2xl uppercase font-semibold">Selamat Datang <br/> Di Aditio Kost</h1>
                 </a>
             </div>
 
