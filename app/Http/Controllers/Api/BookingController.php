@@ -38,6 +38,15 @@ public function store(Request $request)
         return back()->with('error', 'Kamar tidak ditemukan.');
     }
 
+    // Tambahkan kode berikut sebelum membuat booking baru:
+    Pembayaran::where('user_id', $request->user()->id)
+        ->where('midtrans_transaction_status', 'pending')
+        ->whereHas('booking', function ($q) use ($request) {
+            $q->where('kamar_id', $request->kamar_id)
+              ->whereDate('tanggal_booking', $request->tanggal_booking);
+        })
+        ->update(['midtrans_transaction_status' => 'canceled']);
+
     // Buat booking baru untuk bulan berikutnya
     $booking = Booking::create([
         'user_id' => $request->user()->id,

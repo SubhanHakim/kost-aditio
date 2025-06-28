@@ -114,7 +114,7 @@ class KeluhanResource extends Resource
     {
         return [
             'index' => Pages\ListKeluhans::route('/'),
-            'create' => Pages\CreateKeluhan::route('/create'),
+            // 'create' => Pages\CreateKeluhan::route('/create'),
             'edit' => Pages\EditKeluhan::route('/{record}/edit'),
         ];
     }

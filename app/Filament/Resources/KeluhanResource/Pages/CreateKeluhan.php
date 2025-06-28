@@ -9,4 +9,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateKeluhan extends CreateRecord
 {
     protected static string $resource = KeluhanResource::class;
+
+    public static function canAccessPage(): bool
+    {
+        return false;
+    }
 }
