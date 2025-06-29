@@ -16,11 +16,11 @@ class TestimonialResource extends Resource
     protected static ?string $model = Testimonial::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
-    
+
     protected static ?string $navigationLabel = 'Testimonial';
 
     protected static ?string $navigationGroup = 'Manajemen Keluhan';
-    
+
     protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
@@ -79,7 +79,7 @@ class TestimonialResource extends Resource
                     }),
                 Tables\Columns\TextColumn::make('rating')
                     ->label('Rating')
-                    ->formatStateUsing(fn (int $state): string => str_repeat('⭐', $state))
+                    ->formatStateUsing(fn(int $state): string => str_repeat('⭐', $state))
                     ->sortable(),
                 Tables\Columns\BadgeColumn::make('status')
                     ->label('Status')
@@ -88,7 +88,7 @@ class TestimonialResource extends Resource
                         'success' => 'approved',
                         'danger' => 'rejected',
                     ])
-                    ->formatStateUsing(fn (string $state): string => match($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'pending' => 'Menunggu',
                         'approved' => 'Disetujui',
                         'rejected' => 'Ditolak',
@@ -108,16 +108,16 @@ class TestimonialResource extends Resource
                     ->label('Setujui')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
-                    ->visible(fn (Testimonial $record) => $record->status !== 'approved')
-                    ->action(fn (Testimonial $record) => $record->update(['status' => 'approved'])),
-                
+                    ->visible(fn(Testimonial $record) => $record->status !== 'approved')
+                    ->action(fn(Testimonial $record) => $record->update(['status' => 'approved'])),
+
                 Tables\Actions\Action::make('reject')
                     ->label('Tolak')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
-                    ->visible(fn (Testimonial $record) => $record->status !== 'rejected')
-                    ->action(fn (Testimonial $record) => $record->update(['status' => 'rejected'])),
-                
+                    ->visible(fn(Testimonial $record) => $record->status !== 'rejected')
+                    ->action(fn(Testimonial $record) => $record->update(['status' => 'rejected'])),
+
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -126,16 +126,16 @@ class TestimonialResource extends Resource
                     ->label('Setujui Semua')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
-                    ->action(fn (Builder $query) => $query->update(['status' => 'approved']))
+                    ->action(fn(Builder $query) => $query->update(['status' => 'approved']))
                     ->deselectRecordsAfterCompletion(),
-                
+
                 Tables\Actions\BulkAction::make('reject')
                     ->label('Tolak Semua')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
-                    ->action(fn (Builder $query) => $query->update(['status' => 'rejected']))
+                    ->action(fn(Builder $query) => $query->update(['status' => 'rejected']))
                     ->deselectRecordsAfterCompletion(),
-                
+
                 Tables\Actions\DeleteBulkAction::make(),
             ])
             ->defaultSort('created_at', 'desc');
@@ -156,10 +156,15 @@ class TestimonialResource extends Resource
             'edit' => Pages\EditTestimonial::route('/{record}/edit'),
         ];
     }
-    
+
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
             ->with('user');
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
     }
 }

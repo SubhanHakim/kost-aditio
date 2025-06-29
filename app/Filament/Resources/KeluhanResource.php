@@ -118,4 +118,9 @@ class KeluhanResource extends Resource
             'edit' => Pages\EditKeluhan::route('/{record}/edit'),
         ];
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 }
